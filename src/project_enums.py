@@ -25,6 +25,3 @@ class TransactionName(Enum):
     A_CLIP_ABOVE = 'A CLIP ABOVE'
     GROOMER = 'GROOMER'
     WAX = 'EUROPEAN WAX CENTER'
-
-class Category(Enum):
-    

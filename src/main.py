@@ -1,6 +1,7 @@
 import pandas as pd
 from clean_data_fidelity import clean_data_fidelity
 from clean_data_costco import clean_data_costco
+from clean_data_sofi import clean_csv
 
 def combine_data() -> pd.DataFrame:
     df_fidelity = clean_data_fidelity('./test_csv/fidelity.csv')
@@ -15,7 +16,8 @@ def combine_data() -> pd.DataFrame:
 def main():
     pd.set_option('display.max_rows', None)
     df = combine_data()
-    print(df)
+    df_sofi = clean_csv('./test_csv/sofi.csv')
+    print(df_sofi)
     pd.reset_option('display.max_rows')
 if __name__ == '__main__':
     main()
