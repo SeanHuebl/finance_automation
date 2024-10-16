@@ -8,3 +8,18 @@ class TransactionType(Enum):
 
 class PaidOff(Enum):
     PAYMENT = 'INTERNET PAYMENT THANK'
+
+class TransactionName(Enum):
+    PAYPAL = 'PAYPAL '
+    CPI = 'CPI'
+    VC = 'VC'
+    SQ = 'SQ '
+    VENDING_MACHINE = 'VENDING MACHINE'
+    VET = 'VET'
+    STARBUCKSSE = 'STARBUCKSSE'
+    STARBUCKS = 'STARBUCKS'
+    AMAZON_PRIME = 'Amazon Prime'
+    AMAZON = ('AMAZON', 'AMZN')
+    COSTCO = 'COSTCO'
+    A_CLIP_ABOVE = 'A CLIP ABOVE'
+    GROOMER = 'GROOMER'
