@@ -7,7 +7,8 @@ class TransactionType(Enum):
     CREDIT = 'CREDIT'
 
 class PaidOff(Enum):
-    PAYMENT = 'INTERNET PAYMENT THANK'
+    FIDELITY_PAYMENT = 'INTERNET PAYMENT THANK'
+    COSTCO_PAYMENT = 'ONLINE PAYMENT, THANK YOU'
 
 class TransactionName(Enum):
     PAYPAL = 'PAYPAL '
@@ -23,3 +24,7 @@ class TransactionName(Enum):
     COSTCO = 'COSTCO'
     A_CLIP_ABOVE = 'A CLIP ABOVE'
     GROOMER = 'GROOMER'
+    WAX = 'EUROPEAN WAX CENTER'
+
+class Category(Enum):
+    
