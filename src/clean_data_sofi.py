@@ -25,7 +25,7 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
     df['Date'] = df['Date'].dt.strftime('%m/%d/%Y')
     return df
 
-def clean_name(row: pd.DataFrame) -> tuple[str, float]:
+def clean_name(row: pd.DataFrame) -> tuple[str, str, float]:
     name = row['Name']
     amount = row['Amount']
     name = name.upper()
