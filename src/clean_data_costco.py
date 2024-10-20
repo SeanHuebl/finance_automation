@@ -5,29 +5,23 @@ from project_enums import PaidOff, TransactionName
 
 def clean_data_costco(csv_path: str) -> pd.DataFrame:
     df = clean_csv(csv_path)
-    rows_to_drop = []
-    for i in range(df.shape[0]):
-        if df.iloc[i, 2] == PaidOff.COSTCO_PAYMENT.value:
-            rows_to_drop.append(i)
-        clean_transaction_name(df, i)
-    df.drop(rows_to_drop, inplace=True)
+    df = df[df['Name'] != PaidOff.COSTCO_PAYMENT.value]
+    df['Name'] = df.apply(clean_transaction_name, axis=1)
     return df
 
 def clean_csv(csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
-    cols_to_drop = ['Status', 'Member Name']
-    df = df.drop(cols_to_drop, axis=1)
+    df = df.drop(['Status', 'Member Name'], axis=1)
     df['Transaction'] = ['DEBIT' if not pd.isna(a) else 'CREDIT' for a in df['Debit']]
     col = df.pop('Transaction')
     df.insert(1, 'Transaction', col)
-    df.rename(columns={'Description': 'Name'}, inplace=True)
+    df = df.rename(columns={'Description': 'Name'})
     df['Amount'] = [a if not pd.isna(a) else b * -1 for a, b in zip(df['Debit'], df['Credit'])]
-    df.drop(['Debit', 'Credit'], axis=1, inplace=True)
-
+    df = df.drop(['Debit', 'Credit'], axis=1)
     return df
 
-def clean_transaction_name(df: pd.DataFrame, i: int) -> pd.DataFrame:
-    name = df.iloc[i, 2]
+def clean_transaction_name(row: pd.DataFrame) -> str:
+    name = row['Name']
     result = re.split(r'[*#\d\.-]', name)
     
     match result[0]:
@@ -53,6 +47,4 @@ def clean_transaction_name(df: pd.DataFrame, i: int) -> pd.DataFrame:
                     name = TransactionName.AMAZON.value[0]
             if TransactionName.WAX.value in name:
                     name = TransactionName.WAX.value
-
-    df.iloc[i, 2] = name
-    return df
+    return name
