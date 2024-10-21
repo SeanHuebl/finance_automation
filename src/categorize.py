@@ -29,13 +29,13 @@ transaction_dict = {
 }
 
 def categorize_data_income(combined_df: pd.DataFrame) -> pd.DataFrame:
-    income_df = combined_df[combined_df['Transaction'] == TransactionType.CREDIT.value]
-    income_df['Category'] = Category.INCOME.value
+    income_df = combined_df[combined_df['Transaction'] == TransactionType.CREDIT.value].copy()
+    income_df.loc[:, 'Category'] = Category.INCOME.value
     return income_df
 
 def categorize_data_expenses(combined_df: pd.DataFrame) -> pd.DataFrame:
-    expenses_df = combined_df[combined_df['Transaction'] == TransactionType.DEBIT.value]
-    expenses_df['Category'] = expenses_df.apply(category_lookup, axis=1)
+    expenses_df = combined_df[combined_df['Transaction'] == TransactionType.DEBIT.value].copy()
+    expenses_df.loc[:, 'Category'] = expenses_df.apply(category_lookup, axis=1)
     return expenses_df
 
 def category_lookup(row: pd.DataFrame) -> str:

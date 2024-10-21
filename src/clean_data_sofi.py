@@ -17,7 +17,7 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
         (df['Description'] != 'CITI CARD ONLINE') &
         (df['Type'] != 'Deposit') & 
         (df['Type'] != 'Withdrawal')
-        ]
+        ].copy()
     df.rename(columns={'Description' : 'Name'}, inplace=True)
     df.insert(1, 'Transaction', df.pop('Type'))
     df['Amount'] = df['Amount'].mask(df['Amount'] < 0, df['Amount'] * -1, axis=0)

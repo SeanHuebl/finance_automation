@@ -19,12 +19,13 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
 
 def fix_date(row: pd.DataFrame) -> str:
     date = pd.to_datetime(row['Date'], format='%Y-%m-%d')
-    date = date.dt.strftime('%m/%d/%Y')
-    return 
+    date = date.strftime('%m/%d/%Y')
+    return date
     
 def fix_amount(row: pd.DataFrame) -> float:
-    if row['Amount'] == TransactionType.DEBIT.value:
+    if row['Transaction'] == TransactionType.DEBIT.value:
         return row['Amount'] * -1
+    return row['Amount']
     
 def clean_transaction_name(row: pd.DataFrame) -> str:
     name = row['Name']
