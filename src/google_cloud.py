@@ -1,15 +1,15 @@
 import os
-import json
 
 from google.cloud import secretmanager
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import Resource
 
 PROJECT_ID = 'divine-fuze-439311-d6'
 SECRET_ID = 'sheets_access'
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-def access_secret(version_id: str = 'latest') -> json:
+def access_secret(version_id: str = 'latest') -> str:
     
     client = secretmanager.SecretManagerServiceClient()
     name = f'projects/{PROJECT_ID}/secrets/{SECRET_ID}/versions/{version_id}'
@@ -29,3 +29,6 @@ def get_credentials() -> Credentials:
     os.remove('temp_client_secret.json')
 
     return creds
+
+def write_data(service: Resource, sheet_name: str, spreadsheet_id: str) -> None:
+    
