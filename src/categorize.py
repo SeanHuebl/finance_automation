@@ -3,7 +3,7 @@ import pandas as pd
 from project_enums import Category, TransactionType
 
 # Categorizes all transactions unless transaciton would fall into OTHER category
-transaction_dict = {
+transaction_dict: dict = {
     'ROVER' : Category.PET,
     'RX PLUS PHARMACY' : Category.MEDICAL,
     'GROOMER' : Category.PET,
@@ -29,12 +29,12 @@ transaction_dict = {
 }
 
 def categorize_data_income(combined_df: pd.DataFrame) -> pd.DataFrame:
-    income_df = combined_df[combined_df['Transaction'] == TransactionType.CREDIT.value].copy()
+    income_df: pd.DataFrame = combined_df[combined_df['Transaction'] == TransactionType.CREDIT.value].copy()
     income_df.loc[:, 'Category'] = Category.INCOME.value
     return income_df
 
 def categorize_data_expenses(combined_df: pd.DataFrame) -> pd.DataFrame:
-    expenses_df = combined_df[combined_df['Transaction'] == TransactionType.DEBIT.value].copy()
+    expenses_df: pd.DataFrame = combined_df[combined_df['Transaction'] == TransactionType.DEBIT.value].copy()
     expenses_df.loc[:, 'Category'] = expenses_df.apply(category_lookup, axis=1)
     return expenses_df
 

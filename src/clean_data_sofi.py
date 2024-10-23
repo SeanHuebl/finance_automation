@@ -1,15 +1,23 @@
+import os
 import pandas as pd
 import re
 
 from project_enums import TransactionName, TransactionType
-
+from typing import List
 def clean_data_sofi(csv_path: str) -> pd.DataFrame:
-    df = clean_csv(csv_path)
+    if not csv_path or not isinstance(csv_path, str):
+        raise ValueError('Arg: csv_path must exist and be of type str')
+    if not os.path.exists:
+        raise ValueError('Arg: csv_path must be a valid file path')
+    if not csv_path.endswith('.csv'):
+        raise ValueError('Arg csv_path must be of file type .csv')
+    
+    df: pd.DataFrame = clean_csv(csv_path)
     df[['Transaction', 'Name', 'Amount']] = df.apply(clean_name, axis=1).apply(pd.Series)
     return df
 
 def clean_csv(csv_path: str) -> pd.DataFrame:
-    df = pd.read_csv(csv_path)
+    df: pd.DataFrame = pd.read_csv(csv_path)
     df.drop(['Current balance', 'Status'], axis=1, inplace=True)
     df = df[
         (df['Description'] != 'CARDMEMBER SERV') & 
@@ -26,16 +34,17 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
     return df
 
 def clean_name(row: pd.DataFrame) -> tuple[str, str, float]:
-    name = row['Name']
-    amount = row['Amount']
+    transaction: str = row['Transaction']
+    name: str = row['Name']
+    amount: float = row['Amount']
+    
     name = name.upper()
-    transaction = row['Transaction']
     if transaction == TransactionName.DIRECT_DEPOSIT.value or transaction.upper() == TransactionName.INTEREST_EARNED.value:
         transaction = TransactionType.CREDIT.value
     else:
         transaction = TransactionType.DEBIT.value
         
-    result = re.split(r'[*#\d\.-]', name)
+    result: List[str]= re.split(r'[*#\d\.-]', name)
 
     match result[0]:
         case TransactionName.LIBERTY_MUTUAL.value:

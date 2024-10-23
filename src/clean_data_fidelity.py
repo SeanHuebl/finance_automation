@@ -1,10 +1,18 @@
+import os
 import pandas as pd
 import re
 
 from project_enums import PaidOff, TransactionName, TransactionType
 
 def clean_data_fidelity(csv_path: str) -> pd.DataFrame:
-    df = clean_csv(csv_path)
+    if not csv_path or not isinstance(csv_path, str):
+        raise ValueError('Arg: csv_path must exist and be of type str')
+    if not os.path.exists:
+        raise ValueError('Arg: csv_path must be a valid file path')
+    if not csv_path.endswith('.csv'):
+        raise ValueError('Arg csv_path must be of file type .csv')
+
+    df: pd.DataFrame = clean_csv(csv_path)
     df['Name'] = df['Name'].str[:22]
     df = df[df['Name'] != PaidOff.FIDELITY_PAYMENT.value]
     df['Date'] = df.apply(fix_date, axis=1)
@@ -18,7 +26,7 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
     return df.drop('Memo', axis=1)
 
 def fix_date(row: pd.DataFrame) -> str:
-    date = pd.to_datetime(row['Date'], format='%Y-%m-%d')
+    date: pd.Timestamp = pd.to_datetime(row['Date'], format='%Y-%m-%d')
     date = date.strftime('%m/%d/%Y')
     return date
     
@@ -28,7 +36,7 @@ def fix_amount(row: pd.DataFrame) -> float:
     return row['Amount']
     
 def clean_transaction_name(row: pd.DataFrame) -> str:
-    name = row['Name']
+    name: str = row['Name']
     result = re.split(r'[*#\d\.-]', name)
     
     match result[0]:

@@ -10,21 +10,21 @@ def wrangle_data() -> pd.DataFrame:
 
 
 def combine_data() -> pd.DataFrame:
-    df_fidelity = clean_data_fidelity('./test_csv/fidelity.csv')
-    df_costco = clean_data_costco('./test_csv/costco.csv')
-    df_sofi = clean_data_sofi('./test_csv/sofi.csv')
-    df_combined = pd.concat([df_fidelity, df_costco, df_sofi])
+    df_fidelity: pd.DataFrame = clean_data_fidelity('./test_csv/fidelity.csv')
+    df_costco: pd.DataFrame = clean_data_costco('./test_csv/costco.csv')
+    df_sofi: pd.DataFrame = clean_data_sofi('./test_csv/sofi.csv')
+    df_combined: pd.DataFrame = pd.concat([df_fidelity, df_costco, df_sofi])
     return df_combined
     
 def categorize_data(df_combined: pd.DataFrame) -> pd.DataFrame:
-    df_income = categorize_data_income(df_combined)
-    df_expenses = categorize_data_expenses(df_combined)
-    df_combined = pd.concat([df_income, df_expenses])
+    df_income: pd.DataFrame = categorize_data_income(df_combined)
+    df_expenses: pd.DataFrame = categorize_data_expenses(df_combined)
+    df_combined: pd.DataFrame = pd.concat([df_income, df_expenses])
     return df_combined
 
 def fix_time_and_sort(df_combined: pd.DataFrame) -> pd.DataFrame:
     df_combined['Date'] = pd.to_datetime(df_combined['Date'], format='%m/%d/%Y')
-    df_transactions = df_combined.sort_values(by='Date')
+    df_transactions: pd.DataFrame = df_combined.sort_values(by='Date')
     df_transactions = df_transactions.reset_index(drop=True)
     df_transactions['Date'] = df_transactions['Date'].dt.strftime('%m/%d/%Y')
     return df_transactions
