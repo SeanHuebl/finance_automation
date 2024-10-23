@@ -1,8 +1,5 @@
 import pandas as pd
-import json
-import os
 
-from google.cloud import secretmanager
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import Resource
@@ -11,26 +8,20 @@ PROJECT_ID = '438040797905'
 SECRET_ID = 'sheets_access'
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-def access_secret(version_id: str = 'lastest') -> str:
-    
-    client = secretmanager.SecretManagerServiceClient()
-    name = f'projects/{PROJECT_ID}/secrets/{SECRET_ID}/versions/{version_id}'
-
-    response = client.access_secret_version(name=name)
-    return json.loads(response.payload.data.decode('UTF-8'))
-
 def get_credentials() -> Credentials:
-    client_secret = access_secret()
 
-    with open('./temp_client_secret.json', 'w') as secret_file:
-        secret_file.write(client_secret)
-    
-    flow = InstalledAppFlow.from_client_secrets_file('./temp_client_secret.json', SCOPES)
-    creds = flow.run_local_server(port=0)
+    flow = InstalledAppFlow.from_client_secrets_file('./sensitive/client_secret.json', SCOPES, redirect_uri='https://urban-space-parakeet-jw5w77vvprw2p4q5-8080.app.github.dev/')
+    auth_url, _ = flow.authorization_url(prompt='consent')
+    print(f"Please go to this URL to authorize the app: {auth_url}")
 
-    os.remove('./temp_client_secret.json')
+    # After user authorizes, they will get an authorization code to paste here
+    code = input("Enter the authorization code: ")
 
-    return creds
+    # Manually fetch the token using the provided code
+    flow.fetch_token(code=code)
+
+    return flow.credentials
+
 
 def write_data(service: Resource, sheet_name: str, spreadsheet_id: str, df: pd.DataFrame) -> None:
     category = sheet_name.upper()
@@ -39,9 +30,9 @@ def write_data(service: Resource, sheet_name: str, spreadsheet_id: str, df: pd.D
     range_name = f'{sheet_name}!A2:C'
     body = {'values' : values}
     results = service.spreadsheets().values().update(
-        spreadsheet_Id=spreadsheet_id, 
+        spreadsheetId=spreadsheet_id, 
         range=range_name,
         valueInputOption='USER_ENTERED',
         body=body
         ).execute()
-    return f"{results.get('updatedCells')} cells updated"
+    print(f"{results.get('updatedCells')} cells updated in {sheet_name}")

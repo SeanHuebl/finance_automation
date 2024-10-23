@@ -39,7 +39,7 @@ def clean_name(row: pd.DataFrame) -> tuple[str, str, float]:
 
     match result[0]:
         case TransactionName.LIBERTY_MUTUAL.value:
-            if amount < 75.00:
+            if amount < 25.00:
                 name = TransactionName.RENTERS_INSURANCE.value
             else:
                 name = TransactionName.CAR_INSURANCE.value

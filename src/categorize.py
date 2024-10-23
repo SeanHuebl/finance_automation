@@ -4,7 +4,7 @@ from project_enums import Category, TransactionType
 
 # Categorizes all transactions unless transaciton would fall into OTHER category
 transaction_dict = {
-    'Rover' : Category.PET,
+    'ROVER' : Category.PET,
     'RX PLUS PHARMACY' : Category.MEDICAL,
     'GROOMER' : Category.PET,
     'WAGTOPIA' : Category.PET,
@@ -12,7 +12,7 @@ transaction_dict = {
     'KING SOOPERS' : Category.FOOD,
     'RENTERS INSURANCE' : Category.HOUSING,
     'RENT' : Category.HOUSING,
-    'CAR INSURANCE' : Category.HOUSING,
+    'CAR INSURANCE' : Category.CAR,
     'VET' : Category.PET,
     'COSTCO GAS': Category.CAR,
     'SAFEWAY' : Category.FOOD,
