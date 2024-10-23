@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 import os
 
 from google.cloud import secretmanager
@@ -16,7 +17,7 @@ def access_secret(version_id: str = 'lastest') -> str:
     name = f'projects/{PROJECT_ID}/secrets/{SECRET_ID}/versions/{version_id}'
 
     response = client.access_secret_version(name=name)
-    return response.payload.data.decode('UTF-8')
+    return json.loads(response.payload.data.decode('UTF-8'))
 
 def get_credentials() -> Credentials:
     client_secret = access_secret()
