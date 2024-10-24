@@ -105,6 +105,12 @@ flow: InstalledAppFlow = InstalledAppFlow.from_client_secrets_file(
    - Once you have created and modified your copy, update the `spreadsheet_id` variable in the code with your new Spreadsheet ID.
    - The spreadsheet id will be in the URL of the google doc. Example: https://docs.google.com/spreadsheets/d/**user_id**/edit?gid=595143441#gid=595143441
 
+## Google Cloud Project ID:
+
+- When accessing the project id for the client credentials resource in the google_cloud file. The project id will actually be the project number. 
+- This can be found by going to the dashboard for the project and clicking on 'project settings'.
+Then update the `PROJECT_ID` variable in the google_cloud.py file with the project #.
+
 ## Usage
 
 ### Using Sample CSV Files
