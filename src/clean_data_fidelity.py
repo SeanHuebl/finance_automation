@@ -12,30 +12,43 @@ def clean_data_fidelity(csv_path: str) -> pd.DataFrame:
     if not csv_path.endswith('.csv'):
         raise ValueError('Arg csv_path must be of file type .csv')
 
-    df: pd.DataFrame = clean_csv(csv_path)
+    df: pd.DataFrame = _clean_csv(csv_path)
     df['Name'] = df['Name'].str[:22]
     df = df[df['Name'] != PaidOff.FIDELITY_PAYMENT.value]
-    df['Date'] = df.apply(fix_date, axis=1)
-    df['Amount'] = df.apply(fix_amount, axis=1)
-    df['Name'] = df.apply(clean_transaction_name, axis=1)
+    df['Date'] = df.apply(_fix_date, axis=1)
+    df['Amount'] = df.apply(_fix_amount, axis=1)
+    df['Name'] = df.apply(_clean_transaction_name, axis=1)
     return df
 
 
-def clean_csv(csv_path: str) -> pd.DataFrame:
+def _clean_csv(csv_path: str) -> pd.DataFrame:
+    if not csv_path or not isinstance(csv_path, str):
+        raise ValueError('Arg: csv_path must exist and be of type str')
+    if not os.path.exists:
+        raise ValueError('Arg: csv_path must be a valid file path')
+    if not csv_path.endswith('.csv'):
+        raise ValueError('Arg csv_path must be of file type .csv')
+    
     df = pd.read_csv(csv_path)
     return df.drop('Memo', axis=1)
 
-def fix_date(row: pd.DataFrame) -> str:
+def _fix_date(row: pd.DataFrame) -> str:
+    if row.empty or not isinstance(row, pd.DataFrame):
+        raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
     date: pd.Timestamp = pd.to_datetime(row['Date'], format='%Y-%m-%d')
     date = date.strftime('%m/%d/%Y')
     return date
     
-def fix_amount(row: pd.DataFrame) -> float:
+def _fix_amount(row: pd.DataFrame) -> float:
+    if row.empty or not isinstance(row, pd.DataFrame):
+        raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
     if row['Transaction'] == TransactionType.DEBIT.value:
         return row['Amount'] * -1
     return row['Amount']
     
-def clean_transaction_name(row: pd.DataFrame) -> str:
+def _clean_transaction_name(row: pd.DataFrame) -> str:
+    if row.empty or not isinstance(row, pd.DataFrame):
+        raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
     name: str = row['Name']
     result = re.split(r'[*#\d\.-]', name)
     

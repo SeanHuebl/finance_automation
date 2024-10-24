@@ -4,6 +4,7 @@ import re
 
 from project_enums import TransactionName, TransactionType
 from typing import List
+
 def clean_data_sofi(csv_path: str) -> pd.DataFrame:
     if not csv_path or not isinstance(csv_path, str):
         raise ValueError('Arg: csv_path must exist and be of type str')
@@ -12,11 +13,18 @@ def clean_data_sofi(csv_path: str) -> pd.DataFrame:
     if not csv_path.endswith('.csv'):
         raise ValueError('Arg csv_path must be of file type .csv')
     
-    df: pd.DataFrame = clean_csv(csv_path)
-    df[['Transaction', 'Name', 'Amount']] = df.apply(clean_name, axis=1).apply(pd.Series)
+    df: pd.DataFrame = _clean_csv(csv_path)
+    df[['Transaction', 'Name', 'Amount']] = df.apply(_clean_name, axis=1).apply(pd.Series)
     return df
 
-def clean_csv(csv_path: str) -> pd.DataFrame:
+def _clean_csv(csv_path: str) -> pd.DataFrame:
+    if not csv_path or not isinstance(csv_path, str):
+        raise ValueError('Arg: csv_path must exist and be of type str')
+    if not os.path.exists:
+        raise ValueError('Arg: csv_path must be a valid file path')
+    if not csv_path.endswith('.csv'):
+        raise ValueError('Arg csv_path must be of file type .csv')
+    
     df: pd.DataFrame = pd.read_csv(csv_path)
     df.drop(['Current balance', 'Status'], axis=1, inplace=True)
     df = df[
@@ -33,7 +41,9 @@ def clean_csv(csv_path: str) -> pd.DataFrame:
     df['Date'] = df['Date'].dt.strftime('%m/%d/%Y')
     return df
 
-def clean_name(row: pd.DataFrame) -> tuple[str, str, float]:
+def _clean_name(row: pd.DataFrame) -> tuple[str, str, float]:
+    if row.empty or not isinstance(row, pd.DataFrame):
+        raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
     transaction: str = row['Transaction']
     name: str = row['Name']
     amount: float = row['Amount']
