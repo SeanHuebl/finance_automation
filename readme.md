@@ -132,11 +132,15 @@ This project includes three sample CSV files (`sample_fidelity.csv`, `sample_cos
     ```bash
     ./main.sh
     ```
+    If the file isn't executing make sure to give yourself execute permissions on the script. You can use:
+   ```bash
+   chmod +x ./main.sh
+   ```
 
-3. **Authorize Access**:
+4. **Authorize Access**:
    - When prompted, follow the URL provided in the console to authorize access via Google OAuth 2.0. This step is required to securely access the Google Sheets API.
 
-4. **View Results**:
+5. **View Results**:
    - The processed transaction data will be uploaded to your specified Google Spreadsheet.
 
 ## Customizing for Your Own Use
