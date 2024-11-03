@@ -54,6 +54,8 @@ def _clean_transaction_name(row: pd.DataFrame) -> str:
             name = result[1].rstrip()
             if name == TransactionName.A_CLIP_ABOVE.value:
                 name = TransactionName.GROOMER.value
+        case TransactionName.COMCAST.value:
+            name = TransactionName.INTERNET
         case TransactionName.AMAZON_PRIME.value:
             name = TransactionName.AMAZON_PRIME.value.upper()
         case _:

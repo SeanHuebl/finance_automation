@@ -39,6 +39,8 @@ class TransactionName(Enum):
     HEALTH_ONE= 'HEALTHONE'
     SWEDISH = 'HEALTH ONE'
     DIRECT_DEPOSIT = 'Direct Deposit'
+    COMCAST = 'COMCAST CABLE COMM'
+    INTERNET = 'INTERNET'
 
 class Category(Enum):
     INCOME = 'INCOME'

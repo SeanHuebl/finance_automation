@@ -25,7 +25,8 @@ transaction_dict: dict = {
     'HEADWAY' : Category.MEDICAL,
     'XCEL ENERGY' : Category.UTILITIES,
     'HULU' : Category.SUBSCRIPTIONS,
-    'SPOT PET INSURANCE' : Category.PET
+    'SPOT PET INSURANCE' : Category.PET,
+    'INTERNET' : Category.UTILITIES
 }
 
 def _categorize_data_income(combined_df: pd.DataFrame) -> pd.DataFrame:
