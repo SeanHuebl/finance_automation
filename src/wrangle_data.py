@@ -28,9 +28,9 @@ def _combine_data() -> pd.DataFrame:
     Returns:
         pd.DataFrame: A combined DataFrame containing cleaned data from all sources.
     """
-    df_fidelity: pd.DataFrame = clean_data_fidelity('./test_csv/fidelity.csv')
-    df_costco: pd.DataFrame = clean_data_costco('./test_csv/costco.csv')
-    df_sofi: pd.DataFrame = clean_data_sofi('./test_csv/sofi.csv')
+    df_fidelity: pd.DataFrame = clean_data_fidelity('./test_csv/october_2024_fidelity.csv')
+    df_costco: pd.DataFrame = clean_data_costco('./test_csv/october_2024_costco.csv')
+    df_sofi: pd.DataFrame = clean_data_sofi('./test_csv/october_2024_sofi.csv')
 
     # Concatenate all cleaned data into a single DataFrame
     combined_df: pd.DataFrame = pd.concat([df_fidelity, df_costco, df_sofi])

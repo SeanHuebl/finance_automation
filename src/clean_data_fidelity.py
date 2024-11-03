@@ -73,7 +73,7 @@ def _clean_csv(csv_path: str) -> pd.DataFrame:
     # Drop the 'Memo' column as it does not contribute to financial analysis
     return df.drop('Memo', axis=1)
 
-def _fix_date(row: pd.DataFrame) -> str:
+def _fix_date(row: pd.Series) -> str:
     """
     Fixes the date format to MM/DD/YYYY for consistency.
 
@@ -86,13 +86,14 @@ def _fix_date(row: pd.DataFrame) -> str:
     Raises:
         ValueError: If the `row` is empty or not of type `pd.DataFrame`.
     """
-    if row.empty or not isinstance(row, pd.DataFrame):
+
+    if row.empty or not isinstance(row, pd.Series):
         raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
 
     date: pd.Timestamp = pd.to_datetime(row['Date'], format='%Y-%m-%d')
     return date.strftime('%m/%d/%Y')
     
-def _fix_amount(row: pd.DataFrame) -> float:
+def _fix_amount(row: pd.Series) -> float:
     """
     Adjusts the 'Amount' value based on the transaction type.
 
@@ -107,14 +108,14 @@ def _fix_amount(row: pd.DataFrame) -> float:
     Raises:
         ValueError: If the `row` is empty or not of type `pd.DataFrame`.
     """
-    if row.empty or not isinstance(row, pd.DataFrame):
+    if row.empty or not isinstance(row, pd.Series):
         raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
 
     if row['Transaction'] == TransactionType.DEBIT.value:
         return row['Amount'] * -1
     return row['Amount']
     
-def _clean_transaction_name(row: pd.DataFrame) -> str:
+def _clean_transaction_name(row: pd.Series) -> str:
     """
     Cleans and standardizes transaction names based on predefined patterns.
 
@@ -127,7 +128,7 @@ def _clean_transaction_name(row: pd.DataFrame) -> str:
     Raises:
         ValueError: If the `row` is empty or not of type `pd.DataFrame`.
     """
-    if row.empty or not isinstance(row, pd.DataFrame):
+    if row.empty or not isinstance(row, pd.Series):
         raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
 
     name: str = row['Name']

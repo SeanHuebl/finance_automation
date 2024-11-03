@@ -81,7 +81,7 @@ def _clean_csv(csv_path: str) -> pd.DataFrame:
 
     return df
 
-def _clean_transaction_name(row: pd.DataFrame) -> str:
+def _clean_transaction_name(row: pd.Series) -> str:
     """
     Cleans and standardizes transaction names based on predefined patterns.
 
@@ -94,7 +94,7 @@ def _clean_transaction_name(row: pd.DataFrame) -> str:
     Raises:
         ValueError: If the `row` is empty or not of type `pd.DataFrame`.
     """
-    if row.empty or not isinstance(row, pd.DataFrame):
+    if row.empty or not isinstance(row, pd.Series):
         raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
 
     name: str = row['Name']
@@ -122,7 +122,7 @@ def _clean_transaction_name(row: pd.DataFrame) -> str:
             name = result[1].rstrip()
             if name == TransactionName.A_CLIP_ABOVE.value:
                 name = TransactionName.GROOMER.value
-                
+
         case TransactionName.COMCAST.value:
             name = TransactionName.INTERNET.value
 

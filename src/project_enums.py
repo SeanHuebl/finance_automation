@@ -81,7 +81,7 @@ class TransactionName(Enum):
     CAR_INSURANCE = 'CAR INSURANCE'
     ENT_CU = 'ENT CU'
     CAR_PAYMENT = 'CAR PAYMENT'
-    PL = 'PL'
+    STRATFORD = 'STRATFORD STATIO'
     RENT = 'RENT'
     DHHA = 'DENVER HEALTH AN'
     DENVER_HEALTH = 'DENVER HEALTH'
@@ -92,7 +92,7 @@ class TransactionName(Enum):
     HEALTH_ONE = 'HEALTHONE'
     SWEDISH = 'HEALTH ONE'
     DIRECT_DEPOSIT = 'Direct Deposit'
-    COMCAST = 'COMCAST CABLE COMM'
+    COMCAST = 'COMCAST CABLE COMM '
     INTERNET = 'INTERNET'
 
 class Category(Enum):

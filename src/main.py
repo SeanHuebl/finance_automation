@@ -30,7 +30,7 @@ def main() -> None:
     service: Resource = build('sheets', 'v4', credentials=credentials)
 
     # Specify the Google Spreadsheet ID to write data to
-    spreadsheet_id: str = '1T_-oDRsrrKe0pmfGlSkh59K80fc3AmMVJphW7OEh09A'
+    spreadsheet_id: str = '1V5VGf8PrAFo6rbGqjZjbyeq_AZm87ETtUbt2wMwiHQs'
 
     # Iterate through each category and upload the corresponding data to the Google Sheet
     for category in Category:

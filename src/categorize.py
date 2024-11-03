@@ -80,7 +80,7 @@ def _categorize_data_expenses(combined_df: pd.DataFrame) -> pd.DataFrame:
 
     return expenses_df
 
-def _category_lookup(row: pd.DataFrame) -> str:
+def _category_lookup(row: pd.Series) -> str:
     """
     Looks up and assigns a category to a transaction based on its 'Name'.
 
@@ -96,7 +96,7 @@ def _category_lookup(row: pd.DataFrame) -> str:
     Raises:
         ValueError: If the `row` is empty or not of type `pd.DataFrame`.
     """
-    if row.empty or not isinstance(row, pd.DataFrame):
+    if row.empty or not isinstance(row, pd.Series):
         raise ValueError('Arg: row must not be empty and must be of class pd.DataFrame')
 
     # Check if the transaction name exists in the dictionary and assign its category
